@@ -34,8 +34,10 @@ jobs:
           set -eE
           MODULE="$GITHUB_WORKSPACE/module"
           echo "pwd=$(pwd) php=$(php -v | head -1)" >> "$LOG"
-          ls / /data 2>&1 | head -40 >> "$LOG" || true
-          ROOT=$(dirname "$(dirname "$(find / -path '*/bin/magento' -not -path '/proc/*' 2>/dev/null | head -1)")")
+          ls /data 2>&1 | head -30 >> "$LOG" || true
+          ROOT=""
+          for d in /data /var/www/html /app /magento; do if [ -f "$d/bin/magento" ]; then ROOT="$d"; break; fi; done
+          if [ -z "$ROOT" ]; then ROOT=$( (find / -path '*/bin/magento' -not -path '/proc/*' 2>/dev/null || true) | head -1 | xargs dirname | xargs dirname ); fi
           echo "magento root: $ROOT" >> "$LOG"
           cd "$ROOT"
           for i in $(seq 1 30); do curl -s http://opensearch:9200 >/dev/null && break; sleep 5; done
