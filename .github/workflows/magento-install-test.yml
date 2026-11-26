@@ -28,24 +28,26 @@ jobs:
       - name: Install Magento, add the module, compile, use it
         shell: bash
         run: |
-          set -o pipefail
+          LOG=/tmp/m2.log
+          report() { tail -40 "$LOG" | while IFS= read -r line; do echo "::error title=m2::${line:0:250}"; done; }
+          trap 'report; exit 1' ERR
+          set -eE
           MODULE="$GITHUB_WORKSPACE/module"
-          cd /data
+          echo "pwd=$(pwd) php=$(php -v | head -1)" >> "$LOG"
+          ls / /data 2>&1 | head -40 >> "$LOG" || true
+          ROOT=$(dirname "$(dirname "$(find / -path '*/bin/magento' -not -path '/proc/*' 2>/dev/null | head -1)")")
+          echo "magento root: $ROOT" >> "$LOG"
+          cd "$ROOT"
           for i in $(seq 1 30); do curl -s http://opensearch:9200 >/dev/null && break; sleep 5; done
           php bin/magento setup:install --db-host=mysql --db-name=magento --db-user=root --db-password=root \
             --base-url=http://localhost/ --admin-firstname=Ci --admin-lastname=Test --admin-email=ci@example.com \
             --admin-user=admin --admin-password=Admin12345ci --backend-frontname=admin \
-            --search-engine=opensearch --opensearch-host=opensearch --opensearch-port=9200 --use-rewrites=1 2>&1 | tail -5
+            --search-engine=opensearch --opensearch-host=opensearch --opensearch-port=9200 --use-rewrites=1 >> "$LOG" 2>&1
           mkdir -p app/code/GenMagic/ProductPhotos
           cp -R "$MODULE"/. app/code/GenMagic/ProductPhotos/
           rm -rf app/code/GenMagic/ProductPhotos/.git app/code/GenMagic/ProductPhotos/.github
-          php bin/magento module:enable GenMagic_ProductPhotos 2>&1 | tee -a m2.log
-          php bin/magento setup:upgrade --keep-generated 2>&1 | tail -20 | tee -a m2.log
-          php bin/magento setup:di:compile 2>&1 | tail -20 | tee -a m2.log
-          php "$MODULE/.github/ci/smoke.php" 2>&1 | tee smoke.log || true
-          if ! grep -q "SMOKE OK" smoke.log; then
-            tail -40 m2.log | while IFS= read -r line; do echo "::warning title=m2::$line"; done
-            tail -30 smoke.log | while IFS= read -r line; do echo "::error title=smoke::$line"; done
-            exit 1
-          fi
-          grep -E "^ok|LIVE MODELS" smoke.log | while IFS= read -r line; do echo "::notice title=smoke::$line"; done
+          php bin/magento module:enable GenMagic_ProductPhotos >> "$LOG" 2>&1
+          php bin/magento setup:upgrade --keep-generated >> "$LOG" 2>&1
+          php bin/magento setup:di:compile >> "$LOG" 2>&1
+          php "$MODULE/.github/ci/smoke.php" >> "$LOG" 2>&1
+          grep -E "^ok|LIVE MODELS|SMOKE OK" "$LOG" | while IFS= read -r line; do echo "::notice title=smoke::$line"; done
