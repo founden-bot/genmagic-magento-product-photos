@@ -29,7 +29,11 @@ class Client
     /**
      * Hosts GenMagic serves generated files from. Files are only ever downloaded from these.
      */
-    private const MEDIA_HOSTS = ['genmagic.co', 'tlwdqzfibvgektzgdfqa.supabase.co'];
+    private const MEDIA_HOSTS = [
+        'genmagic.co',
+        'axrsv1b9sa2ny4qv.public.blob.vercel-storage.com',
+        'tlwdqzfibvgektzgdfqa.supabase.co',
+    ];
 
     /**
      * @var CurlFactory
