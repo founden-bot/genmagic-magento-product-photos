@@ -2,7 +2,7 @@
     "name": "genmagic/module-product-photos",
     "description": "Make new product photos from a product's own base image in the Magento admin, paid from your own GenMagic balance, and add the ones you like to the product media gallery.",
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://genmagic.co",
     "support": {
