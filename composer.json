@@ -9,9 +9,15 @@
         "email": "hello@genmagic.co",
         "source": "https://genmagic.co"
     },
-    "keywords": ["magento2", "adobe-commerce", "product-photos", "genmagic", "product-images"],
+    "keywords": [
+        "magento2",
+        "adobe-commerce",
+        "product-photos",
+        "genmagic",
+        "product-images"
+    ],
     "require": {
-        "php": "~8.2.0||~8.3.0||~8.4.0",
+        "php": "~8.2.0||~8.3.0||~8.4.0||~8.5.0",
         "ext-curl": "*",
         "magento/framework": ">=103.0.7",
         "magento/module-backend": ">=102.0.7",

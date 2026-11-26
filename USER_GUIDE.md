@@ -6,7 +6,7 @@ The extension is free. Photos are paid from your own GenMagic balance.
 
 ## 1. Before you start
 
-- Magento Open Source or Adobe Commerce 2.4.7 or later, PHP 8.2 to 8.4.
+- Magento Open Source or Adobe Commerce 2.4.7 or later, PHP 8.2 to 8.5.
 - A GenMagic account with an API key and some credit. Get a key at https://genmagic.co/get-api-key. Add credit at https://genmagic.co/pricing.
 
 ## 2. Install

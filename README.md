@@ -6,7 +6,7 @@ Make a new photo of a product from the product's own base image, in a style you 
 - Composer package: `genmagic/module-product-photos`
 - Version: 1.0.0
 - License: MIT
-- Requires: Magento Open Source or Adobe Commerce 2.4.7 or later, PHP 8.2, 8.3 or 8.4
+- Requires: Magento Open Source or Adobe Commerce 2.4.7 or later, PHP 8.2, 8.3, 8.4 or 8.5
 - Price: free. Photos are paid from your own GenMagic balance (see "Cost" below). There is no Magento billing.
 
 ## What it does
