@@ -40,6 +40,8 @@ jobs:
           echo "magento root: $ROOT" >> "$LOG"
           cd "$ROOT"
           for i in $(seq 1 30); do curl -s http://opensearch:9200 >/dev/null && break; sleep 5; done
+          for i in $(seq 1 60); do php -r 'exit(@mysqli_connect("mysql","root","root","magento") ? 0 : 1);' && break; sleep 3; done
+          echo "mysql ready after $i tries" >> "$LOG"
           php bin/magento setup:install --db-host=mysql --db-name=magento --db-user=root --db-password=root \
             --base-url=http://localhost/ --admin-firstname=Ci --admin-lastname=Test --admin-email=ci@example.com \
             --admin-user=admin --admin-password=Admin12345ci --backend-frontname=admin \
