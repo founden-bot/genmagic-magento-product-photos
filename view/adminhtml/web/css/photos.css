@@ -1,0 +1,24 @@
+/**
+ * Copyright GenMagic. All rights reserved.
+ * See LICENSE for license details.
+ */
+.genmagic-photos {
+    max-width: 640px;
+}
+
+.genmagic-photos__intro,
+.genmagic-photos__note {
+    margin-bottom: 1.5rem;
+}
+
+.genmagic-photos__result {
+    margin-top: 1.5rem;
+}
+
+.genmagic-photos__image {
+    border: 1px solid #ccc;
+    display: block;
+    margin-bottom: 1rem;
+    max-width: 100%;
+    width: 320px;
+}

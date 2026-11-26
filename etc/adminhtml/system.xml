@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright GenMagic. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="genmagic" translate="label" sortOrder="950">
+            <label>GenMagic</label>
+        </tab>
+        <section id="genmagic" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+            <class>separator-top</class>
+            <label>Product Photos</label>
+            <tab>genmagic</tab>
+            <resource>GenMagic_ProductPhotos::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Enable GenMagic product photos</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Shows the "GenMagic product photos" section on the product edit page.</comment>
+                </field>
+                <field id="api_key" translate="label comment" type="obscure" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>GenMagic API key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <comment><![CDATA[Photos are paid from your own GenMagic balance through this key. Get a key at <a href="https://genmagic.co/get-api-key" target="_blank" rel="noopener noreferrer">genmagic.co/get-api-key</a>. The key is stored encrypted.]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

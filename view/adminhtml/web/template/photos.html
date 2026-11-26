@@ -1,0 +1,91 @@
+<!--
+/**
+ * Copyright GenMagic. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+<div class="genmagic-photos">
+    <p class="genmagic-photos__intro">
+        <!-- ko i18n: 'Make a new photo of this product from its base image, then add the ones you like to the product gallery. Photos are paid from your own GenMagic balance.' --><!-- /ko -->
+    </p>
+
+    <!-- ko if: !productId -->
+    <p class="genmagic-photos__note"><!-- ko i18n: 'Save the product first. The new photo is made from its base image.' --><!-- /ko --></p>
+    <!-- /ko -->
+
+    <!-- ko if: productId && !hasKey -->
+    <div class="message message-notice">
+        <div>
+            <!-- ko i18n: 'Add your GenMagic API key to start. Get one at' --><!-- /ko -->
+            <a data-bind="attr: {href: keyUrl}, text: keyUrl" target="_blank" rel="noopener noreferrer"></a>.
+            <!-- ko if: settingsUrl -->
+            <!-- ko i18n: 'Then save it in' --><!-- /ko -->
+            <a data-bind="attr: {href: settingsUrl}"><!-- ko i18n: 'Stores > Configuration > GenMagic' --><!-- /ko --></a>.
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: productId && hasKey -->
+    <div class="admin__field">
+        <label class="admin__field-label" for="genmagic-photos-style"><span><!-- ko i18n: 'Style' --><!-- /ko --></span></label>
+        <div class="admin__field-control">
+            <select id="genmagic-photos-style" class="admin__control-select"
+                    data-bind="options: styleOptions, optionsValue: 'id', optionsText: 'label', value: style, enable: !busy()"></select>
+        </div>
+    </div>
+
+    <!-- ko if: models().length > 1 -->
+    <div class="admin__field">
+        <label class="admin__field-label" for="genmagic-photos-model"><span><!-- ko i18n: 'Model' --><!-- /ko --></span></label>
+        <div class="admin__field-control">
+            <select id="genmagic-photos-model" class="admin__control-select"
+                    data-bind="options: models, optionsValue: 'id', optionsText: modelLabel, value: model, enable: !busy()"></select>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <div class="admin__field">
+        <label class="admin__field-label" for="genmagic-photos-extra"><span><!-- ko i18n: 'Extra wishes (optional)' --><!-- /ko --></span></label>
+        <div class="admin__field-control">
+            <input id="genmagic-photos-extra" type="text" class="admin__control-text"
+                   data-bind="value: extra, valueUpdate: 'input', attr: {maxlength: maxExtra}, enable: !busy()"/>
+        </div>
+    </div>
+
+    <div class="admin__field">
+        <div class="admin__field-control">
+            <button type="button" class="action-secondary" data-bind="click: make, enable: canMake()">
+                <span data-bind="text: makeLabel()"></span>
+            </button>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: message -->
+    <div class="message" data-bind="css: {'message-error': failed, 'message-success': !failed() && (preview() || added())}" role="status">
+        <div>
+            <span data-bind="text: message"></span>
+            <!-- ko if: showPricing -->
+            <a data-bind="attr: {href: pricingUrl}" target="_blank" rel="noopener noreferrer"><!-- ko i18n: 'Add credit' --><!-- /ko --></a>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: preview -->
+    <div class="genmagic-photos__result">
+        <img class="genmagic-photos__image" data-bind="attr: {src: preview().preview_url, alt: photoAlt}"/>
+        <div class="admin__field admin__field-option">
+            <input id="genmagic-photos-main" type="checkbox" class="admin__control-checkbox" data-bind="checked: useAsMain"/>
+            <label class="admin__field-label" for="genmagic-photos-main"><!-- ko i18n: 'Also use it as the base, small and thumbnail image' --><!-- /ko --></label>
+        </div>
+        <button type="button" class="action-primary" data-bind="click: addToGallery, enable: !busy()">
+            <span><!-- ko i18n: 'Add to product gallery' --><!-- /ko --></span>
+        </button>
+        <button type="button" class="action-secondary" data-bind="click: discard, enable: !busy()">
+            <span><!-- ko i18n: 'Discard' --><!-- /ko --></span>
+        </button>
+    </div>
+    <!-- /ko -->
+</div>
