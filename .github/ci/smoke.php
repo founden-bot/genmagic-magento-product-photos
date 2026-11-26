@@ -11,6 +11,7 @@ require getcwd() . '/app/bootstrap.php';
 $bootstrap = Bootstrap::create(BP, $_SERVER);
 $om = $bootstrap->getObjectManager();
 $om->get(\Magento\Framework\App\State::class)->setAreaCode('adminhtml');
+$om->configure($om->get(\Magento\Framework\ObjectManager\ConfigLoaderInterface::class)->load('adminhtml'));
 
 function check(bool $ok, string $what): void
 {
